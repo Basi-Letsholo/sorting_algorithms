@@ -3,8 +3,8 @@
 /**
  * insertion_sort_list - A function that sorts a doubly linked list of integers
  *                       in ascending order using the insertion sort algorithm.
- * @list: a pointer to the head
- * 
+ * @list: a pointer to the head.
+ *
 */
 void insertion_sort_list(listint_t **list)
 {

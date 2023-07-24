@@ -39,7 +39,7 @@ j->prev = i;
 
 print_list((const listint_t *)*list);
 
-j= i->prev;
+j = i->prev;
 }
 }
 }

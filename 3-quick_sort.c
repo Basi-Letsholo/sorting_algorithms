@@ -1,52 +1,53 @@
 #include "sort.h"
 
-/**
- * quick_sort - sorts a list in ascending order using quick sort algorithm
- * @array: contains list to sort
- * @size: length of list
- */
-void quick_sort(int *array, size_t size)
+int partition(int *array, size_t size, int left, int right)
 {
-	size_t n = 0;
+    int *temp, i, j;
+    int tmp;
 
-	if (size < 2)
-	{
-		return;
-	}
+    temp = array + right;
+    for (i = j = left; j < right; j++)
+    {
+        if (array[j] < *temp)
+        {
+            if (i < j)
+            {
+                tmp = array[i];
+                array[i] = array[j];
+                array[j] = tmp;
+                print_array(array, size);
+            }
+            i++;
+        }
+    }
 
-	n = partition(array, size);
-	quick_sort(array, n);
-	quick_sort(&array[n + 1], size - n - 1);
+    if (array[i] > *temp)
+    {
+        tmp = array[i];
+        array[i] = array[right];
+        array[right] = tmp;
+        print_array(array, size);
+    }
 
-	print_array(array, size);
+    return (i);
 }
 
-/**
- * partition - sorts each partition of list
- * @array: partitioned array
- * @size: size of array
- * Return: pivot index
- */
-size_t partition(int *array, size_t size)
+void lomuto_sort(int *array, size_t size, int left, int right)
 {
-	int pivot, temp;
-	size_t i, n = 0;
+    int pivot;
 
-	pivot = array[size - 1];
+    if (right - left > 0)
+    {
+        pivot = partition(array, size, left, right);
+        lomuto_sort(array, size, left, pivot - 1);
+        lomuto_sort(array, size, pivot + 1, right);
+    }
+}
 
-	for (i = 0; i < size - 1; i++)
-	{
-		if (array[i] < pivot)
-		{
-			temp = array[i];
-			array[i] = array[n];
-			array[n] = temp;
-			n++;
-		}
-	}
-	temp = array[n];
-	array[n] = pivot;
-	array[size - 1] = temp;
+void quick_sort(int *array, size_t size)
+{
+    if (size < 2)
+    return;
 
-	return (n);
+    lomuto_sort(array, size, 0, size - 1);
 }
